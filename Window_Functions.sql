@@ -1,52 +1,3 @@
--- Find the difference between current salary and next lower salary within each department
-SELECT 
-    employee_name,
-    department_id,
-    salary,
-    salary - LEAD(salary) OVER (
-        PARTITION BY department_id 
-        ORDER BY salary DESC
-    ) AS salary_diff
-FROM employees;
-
--- Ranking Based on Salary Difference
-
-
-
-SELECT 
-    employee_name,
-    department_id,
-    salary,
-    salary_diff,
-    DENSE_RANK() OVER (
-        PARTITION BY department_id 
-        ORDER BY salary_diff DESC
-    ) AS rank_diff
-FROM (
-    SELECT 
-        employee_name,
-        department_id,
-        salary,
-        salary - LEAD(salary) OVER (
-            PARTITION BY department_id 
-            ORDER BY salary DESC
-        ) AS salary_diff
-    FROM employees
-) t;
-
--- Percentage Change Between Values
--- Calculate percentage change between current salary
--- and next salary.
-
--- =====================================================
--- Window Functions Practice: LEAD() & Analytical Thinking
--- =====================================================
-
--- Objective:
--- Learn how to compare rows, calculate differences,
--- and derive insights using window functions.
-
-
 -- =====================================================
 -- 1. Salary Difference Within Department
 -- =====================================================
@@ -64,7 +15,6 @@ SELECT
         ORDER BY salary DESC
     ) AS salary_diff
 FROM employees;
-
 
 -- =====================================================
 -- 2. Ranking Based on Salary Difference
@@ -95,7 +45,6 @@ FROM (
     FROM employees
 ) t;
 
-
 -- =====================================================
 -- 3. Percentage Change Between Values
 -- =====================================================
@@ -119,14 +68,6 @@ FROM (
         LEAD(salary) OVER (ORDER BY salary) AS next_sal
     FROM employees
 ) t;
-
-
-
-
-
-
-
-
 
 
 

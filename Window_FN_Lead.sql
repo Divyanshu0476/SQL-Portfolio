@@ -60,7 +60,7 @@ SELECT
     CASE 
         WHEN current_salary = 0 THEN NULL
         ELSE (next_sal - current_salary) / current_salary * 100
-    END AS pct_change
+        END AS pct_change
 FROM (
     SELECT 
         employee_name,
@@ -68,8 +68,24 @@ FROM (
         LEAD(salary) OVER (ORDER BY salary) AS next_sal
     FROM employees
 ) t;
+-- Write a SQL query to calculate the difference between the current
+--day's stock price and the stock price two days ahead for a given company.
 
+-- LEETCODE QUESTION 
+-- 197 Rising Temp
+Select 
+    id 
+    from(
+        select id,
+        temperature as current_day_temp,
+        recordDate as curr_date,
+        lag(temperature) over(order by recordDate asc) as pre_day_temp,
+        lag(recordDate) over(order by recordDate asc) as pre_date
+        from weather 
+    ) t
+    where pre_day_temp < current_day_temp and datediff(curr_date,pre_date) = 1
 
-
-
+-- initially used LAG() to compare temperatures but did not account for non-consecutive dates.
+--Added:
+DATEDIFF(recordDate, prev_date) = 1
 

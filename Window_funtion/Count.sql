@@ -11,6 +11,8 @@
       from employees) t
        where dup_sal>1
   ; 
+-- Example dataset
+for department 10 and with partition by department_id
 | employee | dept | salary |
 | -------- | ---- | ------ |
 | A        | 10   | 50000  |
